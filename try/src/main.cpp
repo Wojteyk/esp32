@@ -5,7 +5,7 @@
 #include <DHT.h>                // Install DHT library by adafruit 1.3.8
 
 
-#define led_pin 4
+#define O1_pin 4
 #define DHT_SENSOR_PIN 2
 #define DHT_SENSOR_TYPE DHT11
 int value=0;
@@ -13,7 +13,7 @@ int value=0;
 //To provide the ESP32 / ESP8266 with the connection and the sensor type
 DHT dht_sensor(DHT_SENSOR_PIN, DHT_SENSOR_TYPE);
 
-//Provide the token generation process info.
+//Provide the token generation process info.s
 #include "addons/TokenHelper.h"
 //Provide the RTDB payload printing info and other helper functions.
 #include "addons/RTDBHelper.h"
@@ -41,7 +41,7 @@ bool signupOK = false;                     //since we are doing an anonymous sig
 
 void setup(){
 
-  pinMode(led_pin, OUTPUT);
+  pinMode(O1_pin, OUTPUT);
 
   dht_sensor.begin();
   Serial.begin(115200);
@@ -125,11 +125,12 @@ void loop(){
         Serial.println("failed to get data " + fbdo.errorReason());
     }
 
+
   }
   if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis2 > 1000 || sendDataPrevMillis2 == 0)){
     sendDataPrevMillis2 = millis();
     if(Firebase.RTDB.getInt(&fbdo, "Outlet/O1", &value)){
-      digitalWrite(led_pin, value);
+      digitalWrite(O1_pin, value);
     } else{
         Serial.println("Failed");
       }
