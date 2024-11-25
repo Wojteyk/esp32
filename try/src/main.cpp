@@ -128,7 +128,7 @@ void loop(){
   }
   if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis2 > 1000 || sendDataPrevMillis2 == 0)){
     sendDataPrevMillis2 = millis();
-    if(Firebase.RTDB.getInt(&fbdo, "LED/value", &value)){
+    if(Firebase.RTDB.getInt(&fbdo, "Outlet/O1", &value)){
       digitalWrite(led_pin, value);
     } else{
         Serial.println("Failed");
