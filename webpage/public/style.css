@@ -79,7 +79,7 @@
 			animation: pulse512 1.5s infinite;
 		}
 		.status{
-			margin-left: 68px;
+			margin-left: 28px;
 			margin-right: 68px;
 			border-radius: 50%;
 			width: 30px;
@@ -87,9 +87,6 @@
 			background-color: red;
 		}
 		.settings-phone{
-			display: none;
-		}
-		.test{
 			display: none;
 		}
 
@@ -113,29 +110,8 @@
 		}
 
 		@media (max-width:500px) {
-			.button-container{
-				display: block;
-				justify-content: center;
-				width: 100%;
-				gap: 50px;
-			}
 			html{
 				font-size: 10px;
-			}
-			.settings{
-				display: none;
-			}
-			.settings-phone{
-				display: block;
-			}
-			.status{
-				margin: auto;
-			}
-			.test{
-				margin: auto;
-				display: block;
-				margin-top: 10px;
-				margin-bottom: 10px;
 			}
 			
 		}	

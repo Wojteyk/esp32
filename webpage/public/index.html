@@ -23,18 +23,6 @@
 
 	<div class="settings">
 		<div class="button-container">
-			<button id="toggleP1">Gniazdko 1</button>
-			<button id="toggleP2">Gniazdko 2</button>
-			<button id="toggleP3">Gniazdko 3</button>
-		</div>
-		<div class="button-container">
-			<div class="status" id="statusP1"></div>
-			<div class="status" id="statusP2"></div>
-			<div class="status" id="statusP3"></div>
-		</div>
-	</div>
-	<div class="settings-phone">
-		<div class="button-container">
 			<button id="toggleP1" class="test">Gniazdko 1</button>
 			<div class="status" id="statusP1"></div>
 		</div>
@@ -150,7 +138,7 @@
 			const statusElement1 = document.getElementById("statusP1");
 
 		if (p1Value === 1) {
-			statusElement1.style.backgroundColor = "green";
+			statusElement1.style.backgroundColor = "blue";
 		} else {
 			statusElement1.style.backgroundColor = "red";
 		}
@@ -161,7 +149,7 @@
 			const statusElement2 = document.getElementById("statusP2");
 
 		if (p2Value === 1) {
-			statusElement2.style.backgroundColor = "green";
+			statusElement2.style.backgroundColor = "blue";
 		} else {
 			statusElement2.style.backgroundColor = "red";
 		}
@@ -172,7 +160,7 @@
 			const statusElement3 = document.getElementById("statusP3");
 
 		if (p3Value === 1) {
-			statusElement3.style.backgroundColor = "green";
+			statusElement3.style.backgroundColor = "blue";
 		} else {
 			statusElement3.style.backgroundColor = "red";
 		}
