@@ -5,7 +5,10 @@
 #include <DHT.h>                // Install DHT library by adafruit 1.3.8
 
 
+#define statusLed 15
 #define O1_pin 4
+#define O2_pin 0
+#define O3_pin 16
 #define DHT_SENSOR_PIN 2
 #define DHT_SENSOR_TYPE DHT11
 int value=0;
@@ -41,7 +44,10 @@ bool signupOK = false;                     //since we are doing an anonymous sig
 
 void setup(){
 
+  pinMode(statusLed, OUTPUT);
   pinMode(O1_pin, OUTPUT);
+  pinMode(O2_pin, OUTPUT);
+  pinMode(O3_pin, OUTPUT);
 
   dht_sensor.begin();
   Serial.begin(115200);
@@ -57,6 +63,7 @@ void setup(){
   Serial.print("Connected with IP: ");
   Serial.println(WiFi.localIP());
   Serial.println();
+  digitalWrite(statusLed, HIGH);
 
   /* Assign the api key (required) */
   config.api_key = API_KEY;
@@ -127,10 +134,21 @@ void loop(){
 
 
   }
-  if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis2 > 1000 || sendDataPrevMillis2 == 0)){
+  // taking value from databse and changing value of a pin
+  if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis2 > 100 || sendDataPrevMillis2 == 0)){
     sendDataPrevMillis2 = millis();
     if(Firebase.RTDB.getInt(&fbdo, "Outlet/O1", &value)){
-      digitalWrite(O1_pin, value);
+      digitalWrite(O1_pin, !value);
+    } else{
+        Serial.println("Failed");
+      }
+    if(Firebase.RTDB.getInt(&fbdo, "Outlet/O2", &value)){
+      digitalWrite(O2_pin, !value);
+    } else{
+        Serial.println("Failed");
+      }
+    if(Firebase.RTDB.getInt(&fbdo, "Outlet/O3", &value)){
+      digitalWrite(O3_pin, !value);
     } else{
         Serial.println("Failed");
       }
