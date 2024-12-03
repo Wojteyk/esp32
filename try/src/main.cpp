@@ -1,14 +1,15 @@
 #include <Arduino.h>
-#include <WiFi.h>               //we are using the ESP32
-//#include <ESP8266WiFi.h>      // uncomment this line if you are using esp8266 and comment the line above
+#include <WiFi.h>               
 #include <Firebase_ESP_Client.h>
-#include <DHT.h>                // Install DHT library by adafruit 1.3.8
-
-
-#define statusLed 15
-#define O1_pin 4
-#define O2_pin 0
-#define O3_pin 16
+#include <DHT.h>   
+#include <TFT_eSPI.h> 
+#include <SPI.h>
+            
+#define statusLedBlue 1
+#define statusLedRed 1
+#define O1_pin 22
+#define O2_pin 23
+#define O3_pin 21
 #define DHT_SENSOR_PIN 2
 #define DHT_SENSOR_TYPE DHT11
 int value=0;
@@ -37,25 +38,40 @@ FirebaseData fbdo;
 FirebaseAuth auth;
 FirebaseConfig config;
 
+TFT_eSPI tft = TFT_eSPI(); 
+
 unsigned long sendDataPrevMillis = 0;
 unsigned long sendDataPrevMillis2 = 0;
 int count = 0;
-bool signupOK = false;                     //since we are doing an anonymous sign in 
+bool signupOK = false;    //since we are doing an anonymous sign in 
+float tempCity = 0; 
+float humiCity = 0;
 
+                 
 void setup(){
 
-  pinMode(statusLed, OUTPUT);
+  pinMode(statusLedBlue, OUTPUT);
+  pinMode(statusLedRed, OUTPUT);
   pinMode(O1_pin, OUTPUT);
   pinMode(O2_pin, OUTPUT);
   pinMode(O3_pin, OUTPUT);
 
   dht_sensor.begin();
   Serial.begin(115200);
-
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  tft.init();
+
+  // setting screen parameters
+  tft.setRotation(1); 
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextColor(TFT_BLUE, TFT_BLACK); 
+  tft.setTextSize(2);
+  
+  //checking wifi status
   Serial.print("Connecting to Wi-Fi");
   while (WiFi.status() != WL_CONNECTED){
     Serial.print(".");
+    digitalWrite(statusLedRed, HIGH);
     delay(300);
   }
   
@@ -63,7 +79,8 @@ void setup(){
   Serial.print("Connected with IP: ");
   Serial.println(WiFi.localIP());
   Serial.println();
-  digitalWrite(statusLed, HIGH);
+  digitalWrite(statusLedRed, LOW);
+  digitalWrite(statusLedBlue, HIGH);
 
   /* Assign the api key (required) */
   config.api_key = API_KEY;
@@ -90,12 +107,17 @@ void setup(){
 void loop(){
 
   //temperature and humidity measured should be stored in variables so the user
-  //can use it later in the database
-
   float temperature = dht_sensor.readTemperature();
   float humidity = dht_sensor.readHumidity();
-  float tempCity = 0;
-  float humiCity = 0;
+
+  tft.setCursor(5, 10);
+  tft.print("T wew: ");
+  tft.print(temperature);
+  tft.setCursor(5, 30);
+  tft.print("T zew: ");
+  tft.print(tempCity);
+
+
 
   if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 5000 || sendDataPrevMillis == 0)){
     //since we want the data to be updated every second
