@@ -13,6 +13,7 @@
 #define DHT_SENSOR_PIN 2
 #define DHT_SENSOR_TYPE DHT11
 int value=0;
+String valueString="t";
 
 //To provide the ESP32 / ESP8266 with the connection and the sensor type
 DHT dht_sensor(DHT_SENSOR_PIN, DHT_SENSOR_TYPE);
@@ -105,7 +106,6 @@ void setup(){
 }
 
 void loop(){
-
   //temperature and humidity measured should be stored in variables so the user
   float temperature = dht_sensor.readTemperature();
   float humidity = dht_sensor.readHumidity();
@@ -115,8 +115,7 @@ void loop(){
   tft.print(temperature);
   tft.setCursor(5, 30);
   tft.print("T zew: ");
-  tft.print(tempCity);
-
+  tft.print(tempCity);  
 
 
   if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 5000 || sendDataPrevMillis == 0)){
@@ -159,21 +158,33 @@ void loop(){
   // taking value from databse and changing value of a pin
   if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis2 > 100 || sendDataPrevMillis2 == 0)){
     sendDataPrevMillis2 = millis();
-    if(Firebase.RTDB.getInt(&fbdo, "Outlet/O1", &value)){
+    /*if(Firebase.RTDB.getInt(&fbdo, "Outlet/O1", &value)){
       digitalWrite(O1_pin, !value);
     } else{
-        Serial.println("Failed");
+        Serial.println("Failed O1");
       }
     if(Firebase.RTDB.getInt(&fbdo, "Outlet/O2", &value)){
       digitalWrite(O2_pin, !value);
     } else{
-        Serial.println("Failed");
+        Serial.println("Failed O2");
       }
     if(Firebase.RTDB.getInt(&fbdo, "Outlet/O3", &value)){
       digitalWrite(O3_pin, !value);
     } else{
-        Serial.println("Failed");
+        Serial.println("Failed O3");
       }
+      */
+    if(Firebase.RTDB.getString(&fbdo, "Message/text", &valueString)){
+      tft.fillScreen(TFT_BLACK);
+      tft.setCursor(5, 50);
+      tft.print(valueString);
+    } else{
+        Serial.println("Failed text message");
+      }
+
+
+
+
     
   }
     

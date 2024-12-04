@@ -16,6 +16,17 @@
 			margin-bottom: 30px;
 		}
         
+		.button-container{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.textbox-conteiner{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 
 		.data-item{
 			width: 175px;
@@ -51,14 +62,18 @@
 			border-radius: 20px;
 		}
 
+		#message{
+			font-weight: bold;
+			margin-right: 7px;
+		}
+
         #city{
             clear: both;
         }
-
-		.button-container{
+		#lastMessage{
 			display: flex;
-			align-items: center;
 			justify-content: center;
+			align-items: center;
 		}
 		
 		button {
