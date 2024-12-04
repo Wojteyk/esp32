@@ -13,7 +13,7 @@
 #define DHT_SENSOR_PIN 2
 #define DHT_SENSOR_TYPE DHT11
 int value=0;
-String valueString="t";
+String valueString="t", oldString="t";
 
 //To provide the ESP32 / ESP8266 with the connection and the sensor type
 DHT dht_sensor(DHT_SENSOR_PIN, DHT_SENSOR_TYPE);
@@ -175,9 +175,15 @@ void loop(){
       }
       */
     if(Firebase.RTDB.getString(&fbdo, "Message/text", &valueString)){
-      tft.fillScreen(TFT_BLACK);
+
+      if(oldString != valueString){
+        tft.fillScreen(TFT_BLACK);
+      }
+
       tft.setCursor(5, 50);
       tft.print(valueString);
+      oldString = valueString;
+      
     } else{
         Serial.println("Failed text message");
       }
