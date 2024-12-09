@@ -60,9 +60,10 @@ void setup(){
   dht_sensor.begin();
   Serial.begin(115200);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  tft.init();
+  
 
   // setting screen parameters
+  tft.init();
   tft.setRotation(1); 
   tft.fillScreen(TFT_BLACK);
   tft.setTextColor(TFT_BLUE, TFT_BLACK); 
