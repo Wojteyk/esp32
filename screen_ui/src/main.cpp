@@ -114,12 +114,12 @@ void loop() {
 
     //buttons
     tft.setTextColor(TFT_BLUE);
-    tft.setCursor(20+(120-(4*12))/2,10);
+    tft.setCursor(20+(120-(4*12))/2,10); //(4)lenght of string
     tft.print("Temp");
     tft.setCursor(20+(120-(7*12))/2,40);
     tft.print("weather");
-    tft.setCursor(20+(120-(5*12))/2,70);
-    tft.print("Cipki");
+    tft.setCursor(20+(120-(7*12))/2,70);
+    tft.print("Control");
 
     //light the button if cursors is on it  
     if(yVal>5 && yVal < 30){
@@ -171,9 +171,20 @@ void loop() {
   void firstScreen(){
 
     clearCursor();
-    
+
+    //layout
     drawReturn();
 
+    tft.setTextColor(TFT_BLUE);
+    tft.drawRoundRect(15,15,55,30,5,TFT_WHITE);
+    tft.drawCentreString("23,4",43,22,1);
+    tft.drawCentreString("Temp",43,52,1);
+
+    tft.drawRoundRect(90,15,55,30,5,TFT_WHITE);
+    tft.drawCentreString("56",119,22,1);
+    tft.drawCentreString("Hum",119,52,1);
+
+    //return button action
     x = digitalRead(swPin);
 
     if(!x && xVal < 35 && yVal > 100 ){
@@ -192,7 +203,22 @@ void loop() {
 
     clearCursor();
 
+    //layout
     drawReturn();
+
+
+    tft.setTextColor(TFT_BLUE);
+    tft.drawRoundRect(30,10,100,30,5,TFT_WHITE);
+    tft.drawCentreString("Wroclaw",81,17,1);
+
+    tft.drawRoundRect(15,48,55,30,5,TFT_WHITE);
+    tft.drawCentreString("23,4",43,55,1);
+    tft.drawCentreString("Temp",43,85,1);
+
+    tft.drawRoundRect(90,48,55,30,5,TFT_WHITE);
+    tft.drawCentreString("56",119,55,1);
+    tft.drawCentreString("Hum",119,85,1);
+
 
     x = digitalRead(swPin);
 

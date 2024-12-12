@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-		
+
 	<div class="data-head" id="room">Mój pokój</div>
 
 	<div class="data-container">
@@ -20,7 +20,7 @@
 			<p class="value" id="humidity">-</p>
 		</div>
 	</div>
-	<!--
+
 	<div class="settings">
 		<div class="button-container">
 			<button id="toggleP1" class="test">Gniazdko 1</button>
@@ -35,16 +35,7 @@
 			<div class="status" id="statusP3"></div>
 		</div>
 	</div>
-	-->
 
-	<form class="textbox-conteiner" id="screenText">
-		<label for="messageBox" id="message">Wiadomość:</label>
-		<input type="text" id="messageBox" name="messageBox" placeholder="napisz wiadomość" >
-		<button type="submit">Submit</button>
-	  </form>
-	  <p id="lastMessage">
-
-	  </p>
 	<div class="data-head" id="city">Mój pokój</div>	
 
 	<div class="data-container">
@@ -85,7 +76,6 @@
 		const p1Ref = database.ref("Outlet/O1");
 		const p2Ref = database.ref("Outlet/O2");
 		const p3Ref = database.ref("Outlet/O3");
-		const messageEsp = database.ref("Message/text");
 		const tempRefCity = database.ref("Weather/tempCity");
 		const humiRefCity = database.ref("Weather/humiCity");
 		var tempCity=1;
@@ -101,20 +91,6 @@
 			document.getElementById('temperature').innerHTML = temp + "&#8451;";
 		})
 		
-
-		document.getElementById('screenText').onsubmit = (event) => {
-			event.preventDefault(); // zapobiega domyślnemu zachowaniu formularza
-
-			const textMessage = document.getElementById('messageBox').value;
-			messageEsp.set(textMessage);
-			document.getElementById('messageBox').value = '';
-
-			document.getElementById('lastMessage').textContent = `Ostania wiadomośc: ${textMessage}`;;
-}		;
-
-			
-		
-		/*
 		document.getElementById("toggleP1").addEventListener("click", () => {
     		// Read current value from Firebase
 			p1Ref.once("value")
@@ -128,7 +104,7 @@
 						console.error("failed to change value ", error);
 				})
 		});
-			
+
 		document.getElementById("toggleP2").addEventListener("click", () => {
     		// Read current value from Firebase
 			p2Ref.once("value")
@@ -189,7 +165,6 @@
 			statusElement3.style.backgroundColor = "red";
 		}
 		});
-		*/
 		async function fetchData() {
 			const response = await fetch("https://api.openweathermap.org/data/2.5/weather?q=Wrocław&appid=5d4347f2270eb0e792fa93d3f1fa36c8&units=metric");
 			const data = await response.json();
